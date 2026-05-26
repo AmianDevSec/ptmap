@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ptmap",
-    version="1.0.0",
+    version="1.0.1",
     description="Asynchronous path traversal fuzzer",
     author="AmianDevSec",
     author_email="amiandevsec@gmail.com",
