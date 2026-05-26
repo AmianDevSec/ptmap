@@ -3,7 +3,9 @@
   <em>An asynchronous path traversal fuzzer for discovering and testing path traversal vulnerabilities in web applications.</em>
 </p>
 
-## Overview
+
+## Ptmap
+[![GitHub Release](https://img.shields.io/github/v/release/AmianDevSec/ptmap)](https://github.com/AmianDevSec/ptmap/releases/latest)
 
 **ptmap** is a powerful command-line tool designed for security professionals and penetration testers to identify path traversal vulnerabilities through intelligent payload generation and fuzzing. Built with Python 3.10+, it leverages async/await patterns for high-performance concurrent testing across multiple targets.
 
