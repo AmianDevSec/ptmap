@@ -1,3 +1,51 @@
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "ptmap"
+version = "1.0.1"
+description = "Asynchronous path traversal mutation fuzzer"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+
+authors = [
+    { name = "AmianDevSec" }
+]
+
+dependencies = [
+    "aiohttp",
+    "rich",
+    "typer",
+    "pyfiglet"
+]
+
+keywords = [
+    "path-traversal",
+    "fuzzer",
+    "security",
+    "web-security",
+    "pentesting",
+    "bugbounty"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Security",
+]
+
+[project.urls]
+Homepage = "https://github.com/AmianDevSec/ptmap"
+Repository = "https://github.com/AmianDevSec/ptmap"
+Issues = "https://github.com/AmianDevSec/ptmap/issues"
+
+[project.scripts]
+ptmap = "ptmap.ptmap:run"
+
+[tool.setuptools.packages.find]
+include = ["ptmap*"]
