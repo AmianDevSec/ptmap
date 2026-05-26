@@ -177,6 +177,8 @@ def main(
         targets = [target]
     elif pip_input:
         targets = pip_input
+    elif targets:
+        pass
     else:
         logger(
             "Use 'ptmap --help' to view available options and usage examples",
