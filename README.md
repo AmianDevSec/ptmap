@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.jpg" alt="Linux GPT Logo" width="100%" height='auto' />
+  <img src="https://i.ibb.co/XxPsRsvX/logo.jpg" alt="Ptmap img Logo" width="100%" height='auto' />
   <em>An asynchronous path traversal fuzzer for discovering and testing path traversal vulnerabilities in web applications.</em>
 </p>
 
