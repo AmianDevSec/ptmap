@@ -23,12 +23,15 @@ def hero() -> None:
 """
 
     console.print(
-        Panel(
-            Text.from_markup(content.rstrip()),
-            padding=(0, 2),
-            border_style="none"
-        )
+        Text.from_markup(content.rstrip())
+        # Panel(
+        #     ,
+        #     padding=(0, 2),
+        #     border_style="none"
+        # )
     )
+    
+    print(end="\n")
 
 
 if __name__ == "__main__":
