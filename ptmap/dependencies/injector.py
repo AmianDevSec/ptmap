@@ -1,9 +1,9 @@
 from urllib.parse import (
     urlparse,
-    parse_qsl,
-    urlencode,
     urlunparse
 )
+
+import re
 
 
 def generate_injection_points(
@@ -14,30 +14,44 @@ def generate_injection_points(
     parsed = urlparse(url)
 
     #
+    # FUZZ placeholder mode
+    #
+
+    if "FUZZ" in url.upper():
+
+        injected = re.sub(
+            "fuzz",
+            payload,
+            url,
+            flags=re.IGNORECASE
+        )
+
+        return [injected]
+
+    #
     # Query parameter mode
     #
 
     if parsed.query:
 
-        params = parse_qsl(
-            parsed.query,
-            keep_blank_values=True
-        )
+        raw_params = parsed.query.split("&")
 
         injected_urls = []
 
-        for index, (key, _) in enumerate(params):
+        for index, param in enumerate(raw_params):
 
-            cloned_params = params.copy()
+            if "=" not in param:
+                continue
 
-            cloned_params[index] = (
-                key,
-                payload
-            )
+            key = param.split("=", 1)[0]
 
-            rebuilt_query = urlencode(
-                cloned_params,
-                doseq=True
+            rebuilt_query = "&".join(
+                (
+                    f"{key}={payload}"
+                    if i == index
+                    else p
+                )
+                for i, p in enumerate(raw_params)
             )
 
             injected_urls.append(
@@ -54,15 +68,17 @@ def generate_injection_points(
     # Path mode
     #
 
-    stripped_path = parsed.path.rstrip("/")
+    stripped = parsed.path.rstrip("/")
 
-    splitted_path = stripped_path.split("/")
+    if not stripped:
 
-    if splitted_path and splitted_path[-1]:
+        rebuilt_path = "/" + payload
 
-        splitted_path[-1] = payload
+    else:
 
-    rebuilt_path = "/".join(splitted_path)
+        parts = stripped.split("/")
+        parts[-1] = payload
+        rebuilt_path = "/".join(parts)
 
     return [
         urlunparse(
@@ -76,17 +92,17 @@ def generate_injection_points(
 if __name__ == "__main__":
 
     urls = [
-        "https://site.com/page?a=1&b=fuzz",
+        "https://site.com/page?a=1&b=fuzz&d=8",
         "https://site.com/page?a=1&b=2&c=3",
         "https://site.com/path/file.txt",
-        "https://site.com/path/"
+        "https://site.com/page?a=1",
+        "https://0a8b00c903f3d4ff80e608d100f800a7.web-security-academy.net/image?filename=/var/www/images/fuzz"
     ]
 
     for url in urls:
 
         for injected in generate_injection_points(
             url,
-            "PAYLOAD"
+            "../../../etc/passwd%00.png"
         ):
-
             print(injected)
